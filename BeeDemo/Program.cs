@@ -11,11 +11,12 @@ namespace BeeDemo
 	{
 		// options
 		const bool _testRemoves = false;
-		const int _maxIterations = 1000000;
+		const int _maxIterations = 10000000;
 		const int _iterationStep = 10;
 		static void Main()
 		{
-			_TestPerf();
+			var bpt = new Bpt();
+			bpt.test();			//_TestPerf();
 
 		}
 		
@@ -35,21 +36,21 @@ namespace BeeDemo
 				_AddToTargetSeq(sd, s, it);
 				_AddToTargetSeq(sbtd, s, it);
 				_AddToTargetSeq(satd, s, it);
-				if (it <= 5000)
+				//if (it <= 5000)
 					_AddToTargetSeq(sstd, s, it);
 				Console.WriteLine();
 				_SearchTargetSeq(d, s, it);
 				_SearchTargetSeq(sd, s, it);
 				_SearchTargetSeq(sbtd, s, it);
 				_SearchTargetSeq(satd, s, it);
-				if (it <= 5000)
+				//if (it <= 5000)
 					_SearchTargetSeq(sstd, s, it);
 				Console.WriteLine();
 				_RemoveItemsTarget(d, s);
 				_RemoveItemsTarget(sd, s);
 				_RemoveItemsTarget(sbtd, s);
 				_RemoveItemsTarget(satd, s);
-				if (it <= 5000)
+				//if (it <= 5000)
 					_RemoveItemsTarget(sstd, s);
 				Console.WriteLine();
 				Console.WriteLine("*** Random Access - {0} items ***",it);
@@ -58,21 +59,21 @@ namespace BeeDemo
 				_AddToTargetRnd(sd, s, rnd);
 				_AddToTargetRnd(sbtd, s, rnd);
 				_AddToTargetRnd(satd, s, rnd);
-				if (rnd.Length <= 5000)
+				//if (rnd.Length <= 5000)
 					_AddToTargetRnd(sstd, s, rnd);
 				Console.WriteLine();
 				_SearchTargetRnd(d, s, rnd);
 				_SearchTargetRnd(sd, s, rnd);
 				_SearchTargetRnd(sbtd, s, rnd);
 				_SearchTargetRnd(satd, s, rnd);
-				if (rnd.Length <= 5000)
+				//if (rnd.Length <= 5000)
 					_SearchTargetRnd(sstd, s, rnd);
 				Console.WriteLine();
 				_RemoveItemsTarget(d, s);
 				_RemoveItemsTarget(sd, s);
 				_RemoveItemsTarget(sbtd, s);
 				_RemoveItemsTarget(satd, s);
-				if (rnd.Length <= 5000)
+				//if (rnd.Length <= 5000)
 					_RemoveItemsTarget(sstd, s);
 				Console.WriteLine();
 				Console.WriteLine();
