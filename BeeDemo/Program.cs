@@ -11,12 +11,11 @@ namespace BeeDemo
 	{
 		// options
 		const bool _testRemoves = false;
-		const int _maxIterations = 10000000;
+		const int _maxIterations = 1000000;
 		const int _iterationStep = 10;
 		static void Main()
 		{
-			var bpt = new Bpt();
-			bpt.test();			//_TestPerf();
+			_TestPerf();
 
 		}
 		
