@@ -13,6 +13,12 @@ namespace BeeDemo
 		const bool _testRemoves = false;
 		const int _maxIterations = 1000000;
 		const int _iterationStep = 10;
+		const bool _testDictionary = true;
+		const bool _testSortedDictionary = true;
+		const bool _testSortedBTreeDictionary = true;
+		const bool _testSortedBTreePlusDictionary = true;
+		const bool _testSortedAvlTreeDictionary = true;
+		const bool _testSortedSplayTreeDictionary = true;
 		static void Main()
 		{
 			_TestPerf();
@@ -23,56 +29,101 @@ namespace BeeDemo
 		{
 			var d = new Dictionary<int, string>();
 			var sd = new SortedDictionary<int, string>();
-			var sbtd = new SortedBTreeDictionary<int, string>(5);
+			var sbtd = new SortedBTreeDictionary<int, string>();
+			var sbptd = new SortedBPlusTreeDictionary<int, string>();
 			var satd = new SortedAvlTreeDictionary<int, string>();
 			var sstd = new SortedSplayTreeDictionary<int, string>();
 			Stopwatch s = new Stopwatch();
 			var it = _iterationStep;
 			while (it <= _maxIterations)
 			{
+				d.Clear();
+				sd.Clear();
+				sbtd.Clear();
+				sbptd.Clear();
+				satd.Clear();
+				sstd.Clear();
 				Console.WriteLine("*** Sequential Access - {0} items ***",it);
-				_AddToTargetSeq(d, s, it);
-				_AddToTargetSeq(sd, s, it);
-				_AddToTargetSeq(sbtd, s, it);
-				_AddToTargetSeq(satd, s, it);
-				//if (it <= 5000)
+				Console.WriteLine();
+				if(_testDictionary)
+					_AddToTargetSeq(d, s, it);
+				if (_testSortedDictionary)
+					_AddToTargetSeq(sd, s, it);
+				if(_testSortedBTreeDictionary)
+					_AddToTargetSeq(sbtd, s, it);
+				if(_testSortedBTreePlusDictionary)
+					_AddToTargetSeq(sbptd, s, it);
+				if(_testSortedAvlTreeDictionary)
+					_AddToTargetSeq(satd, s, it);
+				if(_testSortedSplayTreeDictionary)
 					_AddToTargetSeq(sstd, s, it);
 				Console.WriteLine();
-				_SearchTargetSeq(d, s, it);
-				_SearchTargetSeq(sd, s, it);
-				_SearchTargetSeq(sbtd, s, it);
-				_SearchTargetSeq(satd, s, it);
-				//if (it <= 5000)
+				if(_testDictionary)
+					_SearchTargetSeq(d, s, it);
+				if (_testSortedDictionary)
+					_SearchTargetSeq(sd, s, it);
+				if(_testSortedBTreeDictionary)
+					_SearchTargetSeq(sbtd, s, it);
+				if(_testSortedBTreePlusDictionary)
+					_SearchTargetSeq(sbptd, s, it);
+				if(_testSortedAvlTreeDictionary)
+					_SearchTargetSeq(satd, s, it);
+				if(_testSortedSplayTreeDictionary)
 					_SearchTargetSeq(sstd, s, it);
 				Console.WriteLine();
-				_RemoveItemsTarget(d, s);
-				_RemoveItemsTarget(sd, s);
-				_RemoveItemsTarget(sbtd, s);
-				_RemoveItemsTarget(satd, s);
-				//if (it <= 5000)
+				if(_testDictionary)
+					_RemoveItemsTarget(d, s);
+				if (_testSortedDictionary)
+					_RemoveItemsTarget(sd, s);
+				if(_testSortedBTreeDictionary)
+					_RemoveItemsTarget(sbtd, s);
+				if(_testSortedBTreePlusDictionary)
+					_RemoveItemsTarget(sbptd, s);
+				if(_testSortedAvlTreeDictionary)
+					_RemoveItemsTarget(satd, s);
+				if(_testSortedSplayTreeDictionary)
 					_RemoveItemsTarget(sstd, s);
 				Console.WriteLine();
 				Console.WriteLine("*** Random Access - {0} items ***",it);
+				Console.WriteLine();
 				var rnd = _FillRandom(it, s);
-				_AddToTargetRnd(d, s, rnd);
-				_AddToTargetRnd(sd, s, rnd);
-				_AddToTargetRnd(sbtd, s, rnd);
-				_AddToTargetRnd(satd, s, rnd);
-				//if (rnd.Length <= 5000)
+				if(_testDictionary)
+					_AddToTargetRnd(d, s, rnd);
+				if (_testSortedDictionary)
+					_AddToTargetRnd(sd, s, rnd);
+				if(_testSortedBTreeDictionary)
+					_AddToTargetRnd(sbtd, s, rnd);
+				if(_testSortedBTreePlusDictionary)
+					_AddToTargetRnd(sbptd, s, rnd);
+				if(_testSortedAvlTreeDictionary)
+					_AddToTargetRnd(satd, s, rnd);
+				if(_testSortedSplayTreeDictionary)
 					_AddToTargetRnd(sstd, s, rnd);
 				Console.WriteLine();
-				_SearchTargetRnd(d, s, rnd);
-				_SearchTargetRnd(sd, s, rnd);
-				_SearchTargetRnd(sbtd, s, rnd);
-				_SearchTargetRnd(satd, s, rnd);
-				//if (rnd.Length <= 5000)
+				if(_testDictionary)
+					_SearchTargetRnd(d, s, rnd);
+				if (_testSortedDictionary)
+					_SearchTargetRnd(sd, s, rnd);
+				if(_testSortedBTreeDictionary)
+					_SearchTargetRnd(sbtd, s, rnd);
+				if(_testSortedBTreePlusDictionary)
+					_SearchTargetRnd(sbptd, s, rnd);
+				if(_testSortedAvlTreeDictionary)
+					_SearchTargetRnd(satd, s, rnd);
+				if (_testSortedSplayTreeDictionary)
 					_SearchTargetRnd(sstd, s, rnd);
 				Console.WriteLine();
-				_RemoveItemsTarget(d, s);
-				_RemoveItemsTarget(sd, s);
-				_RemoveItemsTarget(sbtd, s);
-				_RemoveItemsTarget(satd, s);
-				//if (rnd.Length <= 5000)
+				if (_testDictionary)
+					_RemoveItemsTarget(d, s);
+				if (_testSortedDictionary)
+					_RemoveItemsTarget(sd, s);
+				if (_testSortedBTreeDictionary)
+					_RemoveItemsTarget(sbtd, s);
+				if (_testSortedBTreePlusDictionary)
+					_RemoveItemsTarget(sbptd, s);
+				if (_testSortedAvlTreeDictionary)
+					_RemoveItemsTarget(satd, s);
+				if (_testSortedSplayTreeDictionary)
 					_RemoveItemsTarget(sstd, s);
 				Console.WriteLine();
 				Console.WriteLine();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Bee
 {
@@ -14,6 +15,7 @@ namespace Bee
 	The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	 */
+	[DebuggerDisplay("Count = {Count}")]
 	public class SortedSplayTreeDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 	{
 		_Node _root;
@@ -48,7 +50,7 @@ namespace Bee
 		}
 		bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly => false;
 		public void CopyTo(KeyValuePair<TKey, TValue>[] array, int index)
-			=> DictionaryUtility.CopyTo(this, array, index);
+			=> CollectionUtility.CopyTo(this, array, index);
 		public bool ContainsKey(TKey key)
 		{
 			_root = _Splay(_root, key);
@@ -61,19 +63,20 @@ namespace Bee
 		}
 		public bool TryGetValue(TKey key, out TValue value)
 		{
-
-			if (0 == _comparer.Compare(_root.Key, key))
+			if (null != _root)
 			{
-				value = _root.Value;
-				return true;
+				if (0 == _comparer.Compare(_root.Key, key))
+				{
+					value = _root.Value;
+					return true;
+				}
+				_root = _Splay(_root, key);
+				if (0 == _comparer.Compare(_root.Key, key))
+				{
+					value = _root.Value;
+					return true;
+				}
 			}
-			_root = _Splay(_root, key);
-			if (0 == _comparer.Compare(_root.Key, key))
-			{
-				value = _root.Value;
-				return true;
-			}
-
 			value = default(TValue);
 			return false;
 		}
@@ -422,9 +425,9 @@ namespace Bee
 
 		}
 		public ICollection<TKey> Keys
-			=> DictionaryUtility.CreateKeys(this);
+			=> CollectionUtility.CreateKeys(this);
 		public ICollection<TValue> Values
-			=> DictionaryUtility.CreateValues(this);
+			=> CollectionUtility.CreateValues(this);
 
 		public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
 		{

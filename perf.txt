@@ -1,0 +1,228 @@
+*** Sequential Access - 10 items ***
+Dictionary adds: 0.0727ms
+SortedDictionary adds: 0.1041ms
+SortedBTreeDictionary adds: 3.0254ms
+SortedBPlusTreeDictionary adds: 10.2722ms
+SortedAvlTreeDictionary adds: 1.532ms
+SortedSplayTreeDictionary adds: 1.4436ms
+
+Dictionary searches: 0.0301ms
+SortedDictionary searches: 0.0158ms
+SortedBTreeDictionary searches: 1.0303ms
+SortedBPlusTreeDictionary searches: 1.4287ms
+SortedAvlTreeDictionary searches: 0.3769ms
+SortedSplayTreeDictionary searches: 0.2161ms
+
+
+*** Random Access - 10 items ***
+Dictionary adds: 0.0074ms
+SortedDictionary adds: 0.0068ms
+SortedBTreeDictionary adds: 0.0083ms
+SortedBPlusTreeDictionary adds: 0.0139ms
+SortedAvlTreeDictionary adds: 0.3629ms
+SortedSplayTreeDictionary adds: 0.004ms
+
+Dictionary searches: 0.004ms
+SortedDictionary searches: 0.0021ms
+SortedBTreeDictionary searches: 0.0018ms
+SortedBPlusTreeDictionary searches: 0.0031ms
+SortedAvlTreeDictionary searches: 0.0021ms
+SortedSplayTreeDictionary searches: 0.0021ms
+
+
+
+*** Sequential Access - 100 items ***
+Dictionary adds: 0.0329ms
+SortedDictionary adds: 0.0401ms
+SortedBTreeDictionary adds: 0.06ms
+SortedBPlusTreeDictionary adds: 3.9224ms
+SortedAvlTreeDictionary adds: 0.0385ms
+SortedSplayTreeDictionary adds: 0.0251ms
+
+Dictionary searches: 0.0074ms
+SortedDictionary searches: 0.018ms
+SortedBTreeDictionary searches: 0.0099ms
+SortedBPlusTreeDictionary searches: 0.0155ms
+SortedAvlTreeDictionary searches: 0.0118ms
+SortedSplayTreeDictionary searches: 0.0111ms
+
+
+*** Random Access - 100 items ***
+Dictionary adds: 0.0223ms
+SortedDictionary adds: 0.051ms
+SortedBTreeDictionary adds: 0.0544ms
+SortedBPlusTreeDictionary adds: 1.3102ms
+SortedAvlTreeDictionary adds: 0.0413ms
+SortedSplayTreeDictionary adds: 0.0441ms
+
+Dictionary searches: 0.008ms
+SortedDictionary searches: 0.0189ms
+SortedBTreeDictionary searches: 0.013ms
+SortedBPlusTreeDictionary searches: 0.0192ms
+SortedAvlTreeDictionary searches: 0.0155ms
+SortedSplayTreeDictionary searches: 0.0357ms
+
+
+
+*** Sequential Access - 1000 items ***
+Dictionary adds: 0.2214ms
+SortedDictionary adds: 0.4102ms
+SortedBTreeDictionary adds: 0.2957ms
+SortedBPlusTreeDictionary adds: 1.5556ms
+SortedAvlTreeDictionary adds: 0.3495ms
+SortedSplayTreeDictionary adds: 0.2161ms
+
+Dictionary searches: 0.0705ms
+SortedDictionary searches: 0.1639ms
+SortedBTreeDictionary searches: 0.0901ms
+SortedBPlusTreeDictionary searches: 0.1474ms
+SortedAvlTreeDictionary searches: 0.139ms
+SortedSplayTreeDictionary searches: 0.1244ms
+
+
+*** Random Access - 1000 items ***
+Dictionary adds: 2.0551ms
+SortedDictionary adds: 0.4403ms
+SortedBTreeDictionary adds: 0.4403ms
+SortedBPlusTreeDictionary adds: 0.7762ms
+SortedAvlTreeDictionary adds: 0.4674ms
+SortedSplayTreeDictionary adds: 0.4677ms
+
+Dictionary searches: 0.0634ms
+SortedDictionary searches: 0.1962ms
+SortedBTreeDictionary searches: 0.1452ms
+SortedBPlusTreeDictionary searches: 0.185ms
+SortedAvlTreeDictionary searches: 0.1673ms
+SortedSplayTreeDictionary searches: 0.2736ms
+
+
+
+*** Sequential Access - 10000 items ***
+Dictionary adds: 2.0087ms
+SortedDictionary adds: 4.6853ms
+SortedBTreeDictionary adds: 8.0249ms
+SortedBPlusTreeDictionary adds: 7.0934ms
+SortedAvlTreeDictionary adds: 4.2216ms
+SortedSplayTreeDictionary adds: 2.1689ms
+
+Dictionary searches: 0.7034ms
+SortedDictionary searches: 2.163ms
+SortedBTreeDictionary searches: 1.3087ms
+SortedBPlusTreeDictionary searches: 1.7988ms
+SortedAvlTreeDictionary searches: 1.6271ms
+SortedSplayTreeDictionary searches: 1.6856ms
+
+
+*** Random Access - 10000 items ***
+Dictionary adds: 2.7265ms
+SortedDictionary adds: 8.854ms
+SortedBTreeDictionary adds: 5.9955ms
+SortedBPlusTreeDictionary adds: 8.7333ms
+SortedAvlTreeDictionary adds: 6.4611ms
+SortedSplayTreeDictionary adds: 16.3175ms
+
+Dictionary searches: 0.8642ms
+SortedDictionary searches: 3.2618ms
+SortedBTreeDictionary searches: 1.3046ms
+SortedBPlusTreeDictionary searches: 2.6046ms
+SortedAvlTreeDictionary searches: 2.0367ms
+SortedSplayTreeDictionary searches: 6.8017ms
+
+
+
+*** Sequential Access - 100000 items ***
+Dictionary adds: 36.9142ms
+SortedDictionary adds: 54.7629ms
+SortedBTreeDictionary adds: 86.5422ms
+SortedBPlusTreeDictionary adds: 133.7573ms
+SortedAvlTreeDictionary adds: 62.0517ms
+SortedSplayTreeDictionary adds: 38.9314ms
+
+Dictionary searches: 8.9579ms
+SortedDictionary searches: 28.1205ms
+SortedBTreeDictionary searches: 10.4952ms
+SortedBPlusTreeDictionary searches: 21.6286ms
+SortedAvlTreeDictionary searches: 21.1699ms
+SortedSplayTreeDictionary searches: 78.3702ms
+
+
+*** Random Access - 100000 items ***
+Dictionary adds: 36.0671ms
+SortedDictionary adds: 94.9042ms
+SortedBTreeDictionary adds: 122.8662ms
+SortedBPlusTreeDictionary adds: 200.1759ms
+SortedAvlTreeDictionary adds: 172.6428ms
+SortedSplayTreeDictionary adds: 207ms
+
+Dictionary searches: 16.7131ms
+SortedDictionary searches: 34.4564ms
+SortedBTreeDictionary searches: 26.6426ms
+SortedBPlusTreeDictionary searches: 52.1999ms
+SortedAvlTreeDictionary searches: 38.3234ms
+SortedSplayTreeDictionary searches: 79.3066ms
+
+
+
+*** Sequential Access - 1000000 items ***
+Dictionary adds: 442.9752ms
+SortedDictionary adds: 1064.9764ms
+SortedBTreeDictionary adds: 1047.7572ms
+SortedBPlusTreeDictionary adds: 1344.3068ms
+SortedAvlTreeDictionary adds: 978.2174ms
+SortedSplayTreeDictionary adds: 681.8098ms
+
+Dictionary searches: 111.5101ms
+SortedDictionary searches: 392.1378ms
+SortedBTreeDictionary searches: 128.3735ms
+SortedBPlusTreeDictionary searches: 255.1568ms
+SortedAvlTreeDictionary searches: 294.3268ms
+SortedSplayTreeDictionary searches: 197.9304ms
+
+
+*** Random Access - 1000000 items ***
+Dictionary adds: 796.12ms
+SortedDictionary adds: 1802.6359ms
+SortedBTreeDictionary adds: 2316.4422ms
+SortedBPlusTreeDictionary adds: 2831.593ms
+SortedAvlTreeDictionary adds: 1351.0482ms
+SortedSplayTreeDictionary adds: 2853.4077ms
+
+Dictionary searches: 174.4052ms
+SortedDictionary searches: 454.4768ms
+SortedBTreeDictionary searches: 122.45ms
+SortedBPlusTreeDictionary searches: 866.8347ms
+SortedAvlTreeDictionary searches: 374.7985ms
+SortedSplayTreeDictionary searches: 778.9036ms
+
+
+
+*** Sequential Access - 10000000 items ***
+Dictionary adds: 5011.1449ms
+SortedDictionary adds: 12329.0414ms
+SortedBTreeDictionary adds: 11896.3474ms
+SortedBPlusTreeDictionary adds: 16090.2519ms
+SortedAvlTreeDictionary adds: 19556.1243ms
+SortedSplayTreeDictionary adds: 260686.8111ms
+
+Dictionary searches: 1062.4081ms
+SortedDictionary searches: 4030.6475ms
+SortedBTreeDictionary searches: 873.7335ms
+SortedBPlusTreeDictionary searches: 3475.434ms
+SortedAvlTreeDictionary searches: 4171.6ms
+SortedSplayTreeDictionary searches: 44292.0416ms
+
+
+*** Random Access - 10000000 items ***
+Dictionary adds: 6591.5103ms
+SortedDictionary adds: 18893.8472ms
+SortedBTreeDictionary adds: 31188.6723ms
+SortedBPlusTreeDictionary adds: 53737.9667ms
+SortedAvlTreeDictionary adds: 38067.0573ms
+SortedSplayTreeDictionary adds: 100490.0513ms
+
+Dictionary searches: 2313.8431ms
+SortedDictionary searches: 8129.179ms
+SortedBTreeDictionary searches: 1375.3319ms
+SortedBPlusTreeDictionary searches: 15537.0988ms
+SortedAvlTreeDictionary searches: 6923.9001ms
+SortedSplayTreeDictionary searches: 160066.2415ms

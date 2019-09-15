@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace Bee
 	// started with this, but by now, between porting, bugfixes, and 
 	// retooling to .NETisms, is almost all rewritten
 	// https://gist.github.com/Harish-R/097688ac7f48bcbadfa5
+	[DebuggerDisplay("Count = {Count}")]
 	public class SortedAvlTreeDictionary<TKey,TValue> : IDictionary<TKey,TValue>
 	{
 		#region _Node
@@ -376,7 +378,7 @@ namespace Bee
 			return false;
 		}
 		public void CopyTo(KeyValuePair<TKey, TValue>[] array, int index)
-			=> DictionaryUtility.CopyTo(this, array, index);
+			=> CollectionUtility.CopyTo(this, array, index);
 		public void Add(TKey key,TValue value)
 		{
 			_root = _Add(key, value, _root);
@@ -406,9 +408,9 @@ namespace Bee
 			_root = null;
 		}
 		public ICollection<TKey> Keys
-			=> DictionaryUtility.CreateKeys(this);
+			=> CollectionUtility.CreateKeys(this);
 		public ICollection<TValue> Values
-			=> DictionaryUtility.CreateValues(this);
+			=> CollectionUtility.CreateValues(this);
 		public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
 			=> _EnumNodes(_root).GetEnumerator();
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()

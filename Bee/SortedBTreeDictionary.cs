@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 // port and largely a rewrite of https://www.geeksforgeeks.org/introduction-of-b-tree-2/
 namespace Bee
 {
 	// A BTree implemented as a sorted dictionary
 	// Keys must implement IComparable<TKey> or a Comparer<TKey> must be specified
+	[DebuggerDisplay("Count = {Count}")]
 	public class SortedBTreeDictionary<TKey,TValue> : IDictionary<TKey,TValue>
 	{
 		IComparer<TKey> _comparer;
 		const int _DefaultMininumDegree = 3;
 		_Node root; 
 		int _minimumDegree;  // Minimum degree 
+		
 		public SortedBTreeDictionary(int minimumDegree,IComparer<TKey> comparer)
 		{
 			_comparer = comparer ?? Comparer<TKey>.Default;
@@ -33,7 +36,7 @@ namespace Bee
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 			=> GetEnumerator();
 		public void CopyTo(KeyValuePair<TKey, TValue>[] array, int index)
-			=> DictionaryUtility.CopyTo(this, array, index);
+			=> CollectionUtility.CopyTo(this, array, index);
 		
 		public bool ContainsKey(TKey key)
 		{
@@ -163,9 +166,9 @@ namespace Bee
 		}
 		bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly => false;
 		public ICollection<TKey> Keys
-			=> DictionaryUtility.CreateKeys(this);
+			=> CollectionUtility.CreateKeys(this);
 		public ICollection<TValue> Values
-			=> DictionaryUtility.CreateValues(this);
+			=> CollectionUtility.CreateValues(this);
 
 		#region _Node
 		private sealed class _Node : IEnumerable<KeyValuePair<TKey, TValue>> 
