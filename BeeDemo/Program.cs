@@ -29,7 +29,8 @@ namespace BeeDemo
 				new SortedDictionary<int, string>(),
 				new SortedBTreeDictionary<int, string>(),
 				new SortedBPlusTreeDictionary<int, string>(),
-				new SortedAvlTreeDictionary<int, string>()
+				new SortedAvlTreeDictionary<int, string>(),
+				new SortedSplayTreeDictionary<int, string>()
 			};
 			Stopwatch s = new Stopwatch();
 			var it = _iterationStep;
@@ -100,6 +101,7 @@ namespace BeeDemo
 			var t = d.GetType();
 			try
 			{
+				//d.ContainsKey(d.Count / 2); // force a splay on the splay tree
 				PropertyInfo pi = t.GetProperty("Height");
 				if (null != pi)
 					return (int)pi.GetValue(d);
