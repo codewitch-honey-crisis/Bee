@@ -26,7 +26,7 @@ namespace Bee
 			internal List<TKey> keys { get; private set; }
 
 			protected Node(int newOrder) { keys = new List<TKey>(newOrder - 1); }
-
+			internal abstract int Height {get;}
 			internal int KeyCount { get { return keys.Count; } }
 			internal int KeyCapacity { get { return keys.Capacity; } }
 			internal bool NotFull { get { return keys.Count < keys.Capacity; } }
@@ -49,13 +49,26 @@ namespace Bee
 		internal class InternalNode : Node
 		{
 			private List<Node> childNodes;
-
+			
 			internal InternalNode(InternalNode leftBranch)
 				: base(leftBranch.ChildCount)
 			{
 				_Initialize(leftBranch.ChildCount);
 			}
+			internal override int Height {
+				get {
+					int max = 0;
+					for (var i = 0; i < this.ChildCount; i++)
+					{
+						var m = this.childNodes[i].Height;
+						if (m > max)
+							max = m;
+					}
+					return 1 + max;
+					
+				}
 
+			}
 			internal InternalNode(Node child, int newOrder)
 				: base(newOrder)
 			{
@@ -114,7 +127,7 @@ namespace Bee
 			private LeafNode _rightLeaf;  // For the linked leaf list.
 			private LeafNode _leftLeaf;  // For the linked leaf list.
 			private List<TValue> _values;           // Payload.
-
+			internal override int Height => 1;
 			internal LeafNode(int newOrder)
 				: base(newOrder)
 			{

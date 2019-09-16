@@ -425,7 +425,15 @@ namespace Bee
 		/// alternate comparer when constructed.</remarks>
 		public IComparer<TKey> Comparer { get { return _comparer; } }
 
-
+		public int Height {
+			get {
+				if(_root!=null)
+				{
+					return _root.Height;
+				}
+				return 0;
+			}
+		}
 		/// <summary>Get the number of key/value pairs in the dictionary.</summary>
 		public int Count {
 			get {

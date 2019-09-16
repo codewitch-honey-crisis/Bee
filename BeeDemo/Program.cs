@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Bee;
@@ -13,12 +14,8 @@ namespace BeeDemo
 		const bool _testRemoves = false;
 		const int _maxIterations = 1000000;
 		const int _iterationStep = 10;
-		const bool _testDictionary = true;
-		const bool _testSortedDictionary = true;
-		const bool _testSortedBTreeDictionary = true;
-		const bool _testSortedBTreePlusDictionary = true;
-		const bool _testSortedAvlTreeDictionary = true;
-		const bool _testSortedSplayTreeDictionary = true;
+		const bool _testBestCaseSeq = true;
+		
 		static void Main()
 		{
 			_TestPerf();
@@ -27,104 +24,41 @@ namespace BeeDemo
 		
 		static void _TestPerf()
 		{
-			var d = new Dictionary<int, string>();
-			var sd = new SortedDictionary<int, string>();
-			var sbtd = new SortedBTreeDictionary<int, string>();
-			var sbptd = new SortedBPlusTreeDictionary<int, string>();
-			var satd = new SortedAvlTreeDictionary<int, string>();
-			var sstd = new SortedSplayTreeDictionary<int, string>();
+			var dicts = new IDictionary<int, string>[] {
+				new Dictionary<int, string>(),
+				new SortedDictionary<int, string>(),
+				new SortedBTreeDictionary<int, string>(),
+				new SortedBPlusTreeDictionary<int, string>(),
+				new SortedAvlTreeDictionary<int, string>()
+			};
 			Stopwatch s = new Stopwatch();
 			var it = _iterationStep;
 			while (it <= _maxIterations)
 			{
-				d.Clear();
-				sd.Clear();
-				sbtd.Clear();
-				sbptd.Clear();
-				satd.Clear();
-				sstd.Clear();
+				for (var i = 0; i < dicts.Length; i++)
+					dicts[i].Clear();
 				Console.WriteLine("*** Sequential Access - {0} items ***",it);
 				Console.WriteLine();
-				if(_testDictionary)
-					_AddToTargetSeq(d, s, it);
-				if (_testSortedDictionary)
-					_AddToTargetSeq(sd, s, it);
-				if(_testSortedBTreeDictionary)
-					_AddToTargetSeq(sbtd, s, it);
-				if(_testSortedBTreePlusDictionary)
-					_AddToTargetSeq(sbptd, s, it);
-				if(_testSortedAvlTreeDictionary)
-					_AddToTargetSeq(satd, s, it);
-				if(_testSortedSplayTreeDictionary)
-					_AddToTargetSeq(sstd, s, it);
+				for (var i = 0; i < dicts.Length; i++)
+					_AddToTargetSeq(dicts[i], s, it);
 				Console.WriteLine();
-				if(_testDictionary)
-					_SearchTargetSeq(d, s, it);
-				if (_testSortedDictionary)
-					_SearchTargetSeq(sd, s, it);
-				if(_testSortedBTreeDictionary)
-					_SearchTargetSeq(sbtd, s, it);
-				if(_testSortedBTreePlusDictionary)
-					_SearchTargetSeq(sbptd, s, it);
-				if(_testSortedAvlTreeDictionary)
-					_SearchTargetSeq(satd, s, it);
-				if(_testSortedSplayTreeDictionary)
-					_SearchTargetSeq(sstd, s, it);
+				for (var i = 0; i < dicts.Length; i++)
+					_SearchTargetSeq(dicts[i], s, it);
 				Console.WriteLine();
-				if(_testDictionary)
-					_RemoveItemsTarget(d, s);
-				if (_testSortedDictionary)
-					_RemoveItemsTarget(sd, s);
-				if(_testSortedBTreeDictionary)
-					_RemoveItemsTarget(sbtd, s);
-				if(_testSortedBTreePlusDictionary)
-					_RemoveItemsTarget(sbptd, s);
-				if(_testSortedAvlTreeDictionary)
-					_RemoveItemsTarget(satd, s);
-				if(_testSortedSplayTreeDictionary)
-					_RemoveItemsTarget(sstd, s);
+				for (var i = 0; i < dicts.Length; i++)
+					_RemoveItemsTarget(dicts[i], s);
 				Console.WriteLine();
 				Console.WriteLine("*** Random Access - {0} items ***",it);
 				Console.WriteLine();
 				var rnd = _FillRandom(it, s);
-				if(_testDictionary)
-					_AddToTargetRnd(d, s, rnd);
-				if (_testSortedDictionary)
-					_AddToTargetRnd(sd, s, rnd);
-				if(_testSortedBTreeDictionary)
-					_AddToTargetRnd(sbtd, s, rnd);
-				if(_testSortedBTreePlusDictionary)
-					_AddToTargetRnd(sbptd, s, rnd);
-				if(_testSortedAvlTreeDictionary)
-					_AddToTargetRnd(satd, s, rnd);
-				if(_testSortedSplayTreeDictionary)
-					_AddToTargetRnd(sstd, s, rnd);
+				for (var i = 0; i < dicts.Length; i++)
+					_AddToTargetRnd(dicts[i], s, rnd);
 				Console.WriteLine();
-				if(_testDictionary)
-					_SearchTargetRnd(d, s, rnd);
-				if (_testSortedDictionary)
-					_SearchTargetRnd(sd, s, rnd);
-				if(_testSortedBTreeDictionary)
-					_SearchTargetRnd(sbtd, s, rnd);
-				if(_testSortedBTreePlusDictionary)
-					_SearchTargetRnd(sbptd, s, rnd);
-				if(_testSortedAvlTreeDictionary)
-					_SearchTargetRnd(satd, s, rnd);
-				if (_testSortedSplayTreeDictionary)
-					_SearchTargetRnd(sstd, s, rnd);
+				for (var i = 0; i < dicts.Length; i++)
+					_SearchTargetRnd(dicts[i], s, rnd);
 				Console.WriteLine();
-				if (_testDictionary)
-					_RemoveItemsTarget(d, s);
-				if (_testSortedDictionary)
-					_RemoveItemsTarget(sd, s);
-				if (_testSortedBTreeDictionary)
-					_RemoveItemsTarget(sbtd, s);
-				if (_testSortedBTreePlusDictionary)
-					_RemoveItemsTarget(sbptd, s);
-				if (_testSortedAvlTreeDictionary)
-					_RemoveItemsTarget(satd, s);
-				if (_testSortedSplayTreeDictionary)
-					_RemoveItemsTarget(sstd, s);
+				for (var i = 0; i < dicts.Length; i++)
+					_RemoveItemsTarget(dicts[i], s);
 				Console.WriteLine();
 				Console.WriteLine();
 				it *= _iterationStep;
@@ -161,7 +95,18 @@ namespace BeeDemo
 				Console.WriteLine(_GetName(d) + " threw: " +ex.GetType().Name+": "+ex.Message);
 			}
 		}
-
+		static int _GetHeight(IDictionary<int,string> d)
+		{
+			var t = d.GetType();
+			try
+			{
+				PropertyInfo pi = t.GetProperty("Height");
+				if (null != pi)
+					return (int)pi.GetValue(d);
+			}
+			catch { }
+			return -1;
+		}
 		private static void _SearchTargetSeq(IDictionary<int, string> d, Stopwatch s, int iterations)
 		{
 			try
@@ -174,7 +119,12 @@ namespace BeeDemo
 					d.TryGetValue(i, out v);
 					s.Stop();
 				}
-				Console.WriteLine(_GetName(d) + " searches: " + s.Elapsed.TotalMilliseconds + "ms");
+				Console.Write(_GetName(d) + " searches: " + s.Elapsed.TotalMilliseconds + "ms");
+				var h = _GetHeight(d);
+				if (0 > h)
+					Console.WriteLine();
+				else
+					Console.WriteLine(", Height = {0}", h);
 			}
 			catch(Exception ex)
 			{
@@ -187,13 +137,51 @@ namespace BeeDemo
 			try
 			{
 				s.Reset();
-				for (int i = 0; i < iterations; ++i)
+				if (!_testBestCaseSeq || iterations < 3)
 				{
-					s.Start();
-					d.Add(i, i.ToString());
-					s.Stop();
+					for (int i = 0; i < iterations; ++i)
+					{
+						s.Start();
+						d.Add(i, i.ToString());
+						s.Stop();
+					}
 				}
-				Console.WriteLine(_GetName(d) + " adds: " + s.Elapsed.TotalMilliseconds + "ms");
+				else
+				{
+
+					var ic = iterations / 2;
+					var jc = ic + 1;
+					var added = true;
+					while (added)
+					{
+						added = false;
+						if (0 <= ic)
+						{
+							added = true;
+							s.Start();
+							d.Add(ic, ic.ToString());
+							s.Stop();
+							--ic;
+						}
+						if (jc < iterations)
+						{
+							added = true;
+							s.Start();
+							d.Add(jc, jc.ToString());
+							s.Stop();
+							++jc;
+						}
+					}
+				}
+				Console.Write(_GetName(d) + " adds: " + s.Elapsed.TotalMilliseconds + "ms");
+				// for the splay tree
+				d.ContainsKey(d.Count / 2);
+
+				var h = _GetHeight(d);
+				if (0 > h)
+					Console.WriteLine();
+				else
+					Console.WriteLine(", Height = {0}", h);
 			}
 			catch (Exception ex)
 			{
@@ -233,7 +221,12 @@ namespace BeeDemo
 					d.TryGetValue(j, out v);
 					s.Stop();
 				}
-				Console.WriteLine(_GetName(d) + " searches: " + s.Elapsed.TotalMilliseconds + "ms");
+				Console.Write(_GetName(d) + " searches: " + s.Elapsed.TotalMilliseconds + "ms");
+				var h = _GetHeight(d);
+				if (0 > h)
+					Console.WriteLine();
+				else
+					Console.WriteLine(", Height = {0}", h);
 			}
 			catch (Exception ex)
 			{
@@ -253,7 +246,12 @@ namespace BeeDemo
 					d.Add(j, j.ToString());
 					s.Stop();
 				}
-				Console.WriteLine(_GetName(d) + " adds: " + s.Elapsed.TotalMilliseconds + "ms");
+				Console.Write(_GetName(d) + " adds: " + s.Elapsed.TotalMilliseconds + "ms");
+				var h = _GetHeight(d);
+				if (0 > h)
+					Console.WriteLine();
+				else
+					Console.WriteLine(", Height = {0}", h);
 			}
 			catch (Exception ex)
 			{

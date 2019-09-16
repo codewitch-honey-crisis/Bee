@@ -12,7 +12,7 @@ namespace Bee
 	// retooling to .NETisms, is almost all rewritten
 	// https://gist.github.com/Harish-R/097688ac7f48bcbadfa5
 	[DebuggerDisplay("Count = {Count}")]
-	public class SortedAvlTreeDictionary<TKey,TValue> : IDictionary<TKey,TValue>
+	public class SortedAvlTreeDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 	{
 		#region _Node
 		private sealed class _Node
@@ -27,15 +27,15 @@ namespace Bee
 
 		_Node _root;
 		IComparer<TKey> _comparer;
-		
+
 		_Node _Search(TKey x, _Node t)
 		{
 			if (null == t)
 				return null;
 			int c = _comparer.Compare(x, t.Key);
-			if (0>c)
+			if (0 > c)
 			{
-				if (0==c) // should never happen
+				if (0 == c) // should never happen
 				{
 					return t;
 				}
@@ -44,7 +44,7 @@ namespace Bee
 			}
 			else
 			{
-				if (0==c)
+				if (0 == c)
 				{
 					return t;
 				}
@@ -53,7 +53,7 @@ namespace Bee
 			}
 
 		}
-		_Node _Add(TKey x,TValue v, _Node t)
+		_Node _Add(TKey x, TValue v, _Node t)
 		{
 			int c;
 			if (t == null)
@@ -64,23 +64,23 @@ namespace Bee
 				t.Height = 0;
 				t.Left = t.Right = null;
 			}
-			else if (0>(c = _comparer.Compare(x, t.Key)))
+			else if (0 > (c = _comparer.Compare(x, t.Key)))
 			{
-				t.Left = _Add(x,v, t.Left);
+				t.Left = _Add(x, v, t.Left);
 				if (_GetHeight(t.Left) - _GetHeight(t.Right) == 2)
 				{
-					if (0>_comparer.Compare(x , t.Left.Key))
+					if (0 > _comparer.Compare(x, t.Left.Key))
 						t = _Ror(t);
 					else
 						t = _Rorr(t);
 				}
 			}
-			else if (0<c)
+			else if (0 < c)
 			{
-				t.Right = _Add(x,v, t.Right);
+				t.Right = _Add(x, v, t.Right);
 				if (_GetHeight(t.Right) - _GetHeight(t.Left) == 2)
 				{
-					if (0<_comparer.Compare(x , t.Right.Key))
+					if (0 < _comparer.Compare(x, t.Right.Key))
 						t = _Rol(t);
 					else
 						t = _Roll(t);
@@ -94,7 +94,7 @@ namespace Bee
 
 		_Node _Ror(_Node t)
 		{
-			if (null!=t.Left)
+			if (null != t.Left)
 			{
 				_Node u = t.Left;
 				t.Left = u.Right;
@@ -107,7 +107,7 @@ namespace Bee
 		}
 		_Node _Rol(_Node t)
 		{
-			if (null!=t.Right)
+			if (null != t.Right)
 			{
 				_Node u = t.Right;
 				t.Right = u.Left;
@@ -150,14 +150,14 @@ namespace Bee
 				return null;
 
 			// Searching for element
-			else if (0>_comparer.Compare(x ,t.Key))
+			else if (0 > _comparer.Compare(x, t.Key))
 				t.Left = _Remove(x, t.Left);
-			else if (0<_comparer.Compare(x , t.Key))
+			else if (0 < _comparer.Compare(x, t.Key))
 				t.Right = _Remove(x, t.Right);
 
 			// Element found
 			// With 2 children
-			else if (null!=t.Left && null!=t.Right)
+			else if (null != t.Left && null != t.Right)
 			{
 				temp = _GetLeftMost(t.Right);
 				t.Key = temp.Key;
@@ -185,7 +185,7 @@ namespace Bee
 				// right right case
 				if (_GetHeight(t.Right.Right) - _GetHeight(t.Right.Left) == 1)
 					return _Rol(t);
-					// right left case
+				// right left case
 				else
 					return _Roll(t);
 			}
@@ -267,7 +267,7 @@ namespace Bee
 				// right left case
 				else
 				{
-					s=_Roll(t);
+					s = _Roll(t);
 					return true;
 				}
 			}
@@ -287,7 +287,7 @@ namespace Bee
 					return true;
 				}
 			}
-			s=t;
+			s = t;
 			return res;
 		}
 
@@ -304,7 +304,7 @@ namespace Bee
 				return _GetHeight(t.Left) - _GetHeight(t.Right);
 		}
 		// TODO: Consider making a custom enumerator for this to kick perf up slightly
-		IEnumerable<KeyValuePair<TKey,TValue>> _EnumNodes(_Node t)
+		IEnumerable<KeyValuePair<TKey, TValue>> _EnumNodes(_Node t)
 		{
 			if (null != t)
 			{
@@ -325,7 +325,7 @@ namespace Bee
 		}
 		public SortedAvlTreeDictionary(IComparer<TKey> comparer)
 		{
-			_comparer = comparer??Comparer<TKey>.Default;
+			_comparer = comparer ?? Comparer<TKey>.Default;
 			_root = null;
 		}
 		public SortedAvlTreeDictionary() : this(null)
@@ -362,7 +362,7 @@ namespace Bee
 		public bool TryGetValue(TKey key, out TValue value)
 		{
 			var n = _Search(key, _root);
-			if(null!=n)
+			if (null != n)
 			{
 				value = n.Value;
 				return true;
@@ -370,7 +370,7 @@ namespace Bee
 			value = default(TValue);
 			return false;
 		}
-		public bool Contains(KeyValuePair<TKey,TValue> item)
+		public bool Contains(KeyValuePair<TKey, TValue> item)
 		{
 			TValue value;
 			if (TryGetValue(item.Key, out value) && Equals(value, item.Value))
@@ -379,7 +379,7 @@ namespace Bee
 		}
 		public void CopyTo(KeyValuePair<TKey, TValue>[] array, int index)
 			=> CollectionUtility.CopyTo(this, array, index);
-		public void Add(TKey key,TValue value)
+		public void Add(TKey key, TValue value)
 		{
 			_root = _Add(key, value, _root);
 		}
@@ -389,17 +389,17 @@ namespace Bee
 		{
 			_Node s;
 			var res = _TryRemove(key, _root, out s);
-			if(res)
+			if (res)
 			{
 				_root = s;
 				return true;
 			}
 			return false;
 		}
-		public bool Remove(KeyValuePair<TKey,TValue> item)
+		public bool Remove(KeyValuePair<TKey, TValue> item)
 		{
 			TValue value;
-			if(TryGetValue(item.Key,out value) && Equals(value,item.Value))
+			if (TryGetValue(item.Key, out value) && Equals(value, item.Value))
 				return Remove(item.Key); // returns true
 			return false;
 		}
@@ -415,5 +415,12 @@ namespace Bee
 			=> _EnumNodes(_root).GetEnumerator();
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 			=> GetEnumerator();
+		public int Height {
+			get {
+				if (null != _root)
+					return _root.Height;
+				return 0;
+			}
+		}
 	}
 }

@@ -11,13 +11,13 @@ namespace Bee
 	{
 		IComparer<TKey> _comparer;
 		const int _DefaultMininumDegree = 3;
-		_Node root; 
+		_Node _root; 
 		int _minimumDegree;  // Minimum degree 
 		
 		public SortedBTreeDictionary(int minimumDegree,IComparer<TKey> comparer)
 		{
 			_comparer = comparer ?? Comparer<TKey>.Default;
-			root = null;
+			_root = null;
 			_minimumDegree = minimumDegree;
 			
 		}
@@ -29,8 +29,8 @@ namespace Bee
 		public SortedBTreeDictionary() : this(_DefaultMininumDegree) { }
 		public IEnumerator<KeyValuePair<TKey,TValue>> GetEnumerator()
 		{
-			if (null != root)
-				foreach (var item in root)
+			if (null != _root)
+				foreach (var item in _root)
 					yield return item;
 		}
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
@@ -40,9 +40,9 @@ namespace Bee
 		
 		public bool ContainsKey(TKey key)
 		{
-			if (null != root)
+			if (null != _root)
 			{
-				return root.ContainsKey(key);
+				return _root.ContainsKey(key);
 			}
 			return false;
 		}
@@ -53,9 +53,9 @@ namespace Bee
 		}
 		public bool TryGetValue(TKey key,out TValue value)
 		{
-			if(null!=root)
+			if(null!=_root)
 			{
-				var node = root.Search(key);
+				var node = _root.Search(key);
 				if (null != node)
 					return node.TryGet(key, out value);
 			}
@@ -64,9 +64,9 @@ namespace Bee
 		}
 		public TValue this[TKey key] {
 			get {
-				if(null!=root)
+				if(null!=_root)
 				{
-					var node = root.Search(key);
+					var node = _root.Search(key);
 					if (null != node)
 					{
 						TValue result;
@@ -77,9 +77,9 @@ namespace Bee
 				throw new KeyNotFoundException();
 			}
 			set {
-				if(null!=root)
+				if(null!=_root)
 				{
-					var node = root.Search(key);
+					var node = _root.Search(key);
 					if (null != node && node.TrySet(key, value))
 						return;
 				}
@@ -88,9 +88,9 @@ namespace Bee
 		}
 		public int Count {
 			get {
-				if (null == root)
+				if (null == _root)
 					return 0;
-				return root.GetItemCount();
+				return _root.GetItemCount();
 			}
 		}
 		public void Add(TKey key, TValue value)
@@ -103,31 +103,31 @@ namespace Bee
 		void _Add(TKey key,TValue value)
 		{
 			// tree is empty?
-			if (null == root)
+			if (null == _root)
 			{
-				root = new _Node(_comparer,_minimumDegree, true);
-				root.Items[0] = new KeyValuePair<TKey, TValue>(key,value);  // Insert key 
-				root.KeyCount = 1; 
+				_root = new _Node(_comparer,_minimumDegree, true);
+				_root.Items[0] = new KeyValuePair<TKey, TValue>(key,value);  // Insert key 
+				_root.KeyCount = 1; 
 				return;
 			}
 
 			// grow tree if root is full
-			if (root.KeyCount == 2 * _minimumDegree - 1)
+			if (_root.KeyCount == 2 * _minimumDegree - 1)
 			{
 				_Node newRoot = new _Node(_comparer,_minimumDegree, false);
 
-				newRoot.Children[0] = root;
-				newRoot.Split(0, root);
+				newRoot.Children[0] = _root;
+				newRoot.Split(0, _root);
 				// figure out which child gets the key (sort)
 				int i = 0;
 				if (0>_comparer.Compare(newRoot.Items[0].Key,key))
 					++i;
 				newRoot.Children[i].Insert(key,value);
 
-				root = newRoot;
+				_root = newRoot;
 			}
 			else  // just insert
-				root.Insert(key,value);
+				_root.Insert(key,value);
 			
 		}
 		public void Add(KeyValuePair<TKey,TValue> kvp)
@@ -141,18 +141,18 @@ namespace Bee
 		}
 		public bool Remove(TKey k)
 		{
-			if (null != root)
+			if (null != _root)
 			{
-				if (!root.Remove(k))
+				if (!_root.Remove(k))
 				{
 					// if root node has 0 keys collapse the tree by one
-					if (0 == root.KeyCount)
+					if (0 == _root.KeyCount)
 					{
-						_Node tmp = root;
-						if (root.IsLeaf)
-							root = null;
+						_Node tmp = _root;
+						if (_root.IsLeaf)
+							_root = null;
 						else
-							root = root.Children[0];
+							_root = _root.Children[0];
 					}
 				}
 				return true;
@@ -162,7 +162,7 @@ namespace Bee
 		public void Clear()
 		{
 			// just erase the root
-			root = null;
+			_root = null;
 		}
 		bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly => false;
 		public ICollection<TKey> Keys
@@ -170,15 +170,37 @@ namespace Bee
 		public ICollection<TValue> Values
 			=> CollectionUtility.CreateValues(this);
 
+		static int _GetHeight(_Node node)
+		{
+			if (null == node)
+				return 0;
+			if (node.IsLeaf)
+				return 1;
+			int max = 0;
+			for(var i = 0;i<node.Children.Length;i++)
+			{
+				var m = _GetHeight(node.Children[i]);
+				if (m > max)
+					max = m;
+			}
+			return 1 + max;
+		}
+		public int Height {
+			get {
+				
+				return _GetHeight(_root);
+				
+			}
+		}
 		#region _Node
 		private sealed class _Node : IEnumerable<KeyValuePair<TKey, TValue>> 
 		{
 			IComparer<TKey> _comparer;
 			int _minimumDegree; 
-			internal KeyValuePair<TKey, TValue>[] Items;  
-			internal _Node[] Children; 
-			internal int KeyCount;
-			internal bool IsLeaf;
+			public KeyValuePair<TKey, TValue>[] Items;  
+			public _Node[] Children; 
+			public int KeyCount;
+			public bool IsLeaf;
 			public _Node(IComparer<TKey> comparer, int minimumDegree, bool isLeaf)    
 			{
 				_comparer = comparer;
@@ -678,8 +700,7 @@ namespace Bee
 			//friend class BTree;
 		};
 		#endregion
-		
+			
 	}
-
 }
 
