@@ -21,6 +21,25 @@ namespace Bee
 				return new _SyncEnumerable<T>(collection, @lock);
 			return null;
 		}
+		public static ICollection<T> Synchronize<T>(this ICollection<T> collection, ReaderWriterLockSlim @lock = null)
+		{
+			if (null == @lock)
+				@lock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
+			var l = collection as IList<T>;
+			if (null != l)
+				return new _SyncList<T>(l, @lock);
+			if (null != collection)
+				return new _SyncCollection<T>(collection, @lock);
+			return null;
+		}
+		public static IList<T> Synchronize<T>(this IList<T> collection, ReaderWriterLockSlim @lock = null)
+		{
+			if (null == @lock)
+				@lock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
+			if (null != collection)
+				return new _SyncList<T>(collection, @lock);
+			return null;
+		}
 		public static IDictionary<TKey, TValue> Synchronize<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, ReaderWriterLockSlim @lock=null)
 		{
 			if (null == @lock)
