@@ -58,8 +58,10 @@ namespace BeeDemo
 				for (var i = 0; i < dicts.Length; i++)
 					_SearchTargetRnd(dicts[i], s, rnd);
 				Console.WriteLine();
+				Console.WriteLine("*** Sequential Scan - {0} items ***", it);
+				Console.WriteLine();
 				for (var i = 0; i < dicts.Length; i++)
-					_RemoveItemsTarget(dicts[i], s);
+					_ScanTarget( dicts[i], s,it);
 				Console.WriteLine();
 				Console.WriteLine();
 				it *= _iterationStep;
@@ -131,6 +133,32 @@ namespace BeeDemo
 			catch(Exception ex)
 			{
 				Console.WriteLine(_GetName(d) + " threw: " +ex.GetType().Name+": "+ex.Message);
+			}
+		}
+		private static void _ScanTarget(IDictionary<int, string> d, Stopwatch s, int iterations)
+		{
+			try
+			{
+				s.Reset();
+				using (var e = d.GetEnumerator())
+				{
+					for (int i = 0; i < iterations; ++i)
+					{
+						s.Start();
+						e.MoveNext();
+						s.Stop();
+					}
+				}
+				Console.Write(_GetName(d) + " scan: " + s.Elapsed.TotalMilliseconds + "ms");
+				var h = _GetHeight(d);
+				if (0 > h)
+					Console.WriteLine();
+				else
+					Console.WriteLine(", Height = {0}", h);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(_GetName(d) + " threw: " + ex.GetType().Name + ": " + ex.Message);
 			}
 		}
 
