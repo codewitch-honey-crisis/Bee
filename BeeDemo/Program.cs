@@ -18,6 +18,7 @@ namespace BeeDemo
 		
 		static void Main()
 		{
+			
 			_TestPerf();
 
 		}
@@ -29,8 +30,8 @@ namespace BeeDemo
 				new SortedDictionary<int, string>(),
 				new SortedBTreeDictionary<int, string>(),
 				new SortedBPlusTreeDictionary<int, string>(),
-				new SortedAvlTreeDictionary<int, string>(),
-				new SortedSplayTreeDictionary<int, string>()
+				//new SortedAvlTreeDictionary<int, string>(),
+				//new SortedSplayTreeDictionary<int, string>()
 			};
 			Stopwatch s = new Stopwatch();
 			var it = _iterationStep;
