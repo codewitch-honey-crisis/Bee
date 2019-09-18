@@ -155,11 +155,7 @@ namespace Bee
 				get { return _rightLeaf; }
 				set { _rightLeaf = value; }
 			}
-			internal LeafNode LeftLeaf {
-				get { return _leftLeaf; }
-				set { _leftLeaf = value; }
-			}
-
+			
 
 			internal int ValueCount { get { return _values.Count; } }
 

@@ -39,8 +39,7 @@ namespace Bee
                     if (leftLeaf != null)
                     {
                         leftLeaf.RightLeaf = leaf.RightLeaf;
-						leftLeaf.LeftLeaf = leaf.LeftLeaf;
-                        _Demote (path);
+						 _Demote (path);
                     }
 
                     return;
@@ -65,8 +64,7 @@ namespace Bee
                         // Coalesce right leaf to current leaf and prune right leaf.
                         leaf.Add (rightLeaf, 0, rightLeaf.KeyCount);
                         leaf.RightLeaf = rightLeaf.RightLeaf;
-						leaf.LeftLeaf = rightLeaf.LeftLeaf;
-                        path.TraverseRight ();
+						path.TraverseRight ();
                         _Demote (path);
                     }
             }

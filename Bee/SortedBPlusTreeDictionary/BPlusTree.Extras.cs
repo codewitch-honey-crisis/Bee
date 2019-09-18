@@ -49,27 +49,7 @@ namespace Bee
 				}
 			
         }
-		// TODO: Fix this
-		public IEnumerable<KeyValuePair<TKey,TValue>> Reversed {
-			get {
-				return new ReverseEnumerable(this);
-			}
-		}
-		private class ReverseEnumerable : IEnumerable<KeyValuePair<TKey,TValue>>
-		{
-			SortedBPlusTreeDictionary<TKey, TValue> _target;
-			public ReverseEnumerable(SortedBPlusTreeDictionary<TKey,TValue> target)
-			{
-				_target = target;
-			}
-			public IEnumerator<KeyValuePair<TKey,TValue>> GetEnumerator()
-			{
-				return new ReverseEnumerator(_target);
-			}
-			System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-				=> GetEnumerator();
-
-		}
+		
         /// <summary>
         /// This iterator provides range query support with ordered results.
         /// </summary>
