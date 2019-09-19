@@ -125,14 +125,13 @@ namespace Bee
 		internal class LeafNode: Node
 		{
 			private LeafNode _rightLeaf;  // For the linked leaf list.
-			private LeafNode _leftLeaf;  // For the linked leaf list.
+
 			private List<TValue> _values;           // Payload.
 			internal override int Height => 1;
 			internal LeafNode(int newOrder)
 				: base(newOrder)
 			{
 				_values = new List<TValue>(newOrder - 1);
-				_leftLeaf = null;
 				_rightLeaf = null;
 			}
 
@@ -146,7 +145,7 @@ namespace Bee
 				// Linked list insertion.
 				_rightLeaf = leftLeaf._rightLeaf;
 				leftLeaf._rightLeaf = this;
-				_leftLeaf = leftLeaf._leftLeaf;
+
 			}
 
 

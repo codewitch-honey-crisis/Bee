@@ -12,7 +12,7 @@ namespace BeeDemo
 	{
 		// options
 		const bool _testRemoves = false;
-		const int _maxIterations = 1000000;
+		const int _maxIterations = 1000;
 		const int _iterationStep = 10;
 		const bool _testBestCaseSeq = true;
 		
@@ -26,7 +26,7 @@ namespace BeeDemo
 		static void _TestPerf()
 		{
 			var dicts = new IDictionary<int, string>[] {
-				new Dictionary<int, string>(),
+				//new Dictionary<int, string>(),
 				new SortedDictionary<int, string>(),
 				new SortedBTreeDictionary<int, string>(),
 				new SortedBPlusTreeDictionary<int, string>(),

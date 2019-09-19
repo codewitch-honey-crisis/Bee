@@ -62,6 +62,20 @@ namespace Bee
 				++i;
 			}
 		}
+		public static void CopyTo<T>(ICollection<T> source, T[] array, int index)
+		{
+			var i = source.Count;
+			if (i > array.Length)
+				throw new ArgumentException("The array is not big enough to hold the dictionary entries.", nameof(array));
+			if (0 > index || i > array.Length + index)
+				throw new ArgumentOutOfRangeException(nameof(index));
+			i = 0;
+			foreach (var item in source)
+			{
+				array[i + index] = item;
+				++i;
+			}
+		}
 		public static ICollection<TKey> CreateKeys<TKey, TValue>(IDictionary<TKey, TValue> parent)
 			=> new _KeysCollection<TKey, TValue>(parent);
 		public static ICollection<TValue> CreateValues<TKey, TValue>(IDictionary<TKey, TValue> parent)

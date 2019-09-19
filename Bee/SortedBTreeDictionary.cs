@@ -640,8 +640,7 @@ namespace Bee
 			
 		
 		}
-		#endregion
-			
+		#endregion	
 	}
 }
 

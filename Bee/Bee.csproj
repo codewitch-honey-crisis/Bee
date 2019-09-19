@@ -8,8 +8,4 @@
     <DefineConstants>TRACE;DEBUG</DefineConstants>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="BPlusTree.cs" />
-  </ItemGroup>
-
 </Project>
